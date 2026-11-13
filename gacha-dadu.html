@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gacha Dadu - TITID WEB</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  background: #101010;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+.game {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px 20px;
+  background: #202020;
+  border: 1px solid #444;
+  border-radius: 20px;
+}
+#dice {
+  font-size: 110px;
+  margin: 25px;
+}
+button {
+  background: #8b5cf6;
+  color: white;
+  border: 0;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+#result {
+  margin-top: 25px;
+  font-size: 23px;
+}
+</style>
+</head>
+<body>
+<div class="game">
+<h1>🎲 GACHA DADU</h1>
+<p>Lempar dadu dan dapatkan angka acak!</p>
+<div id="dice">🎲</div>
+<button id="roll" onclick="rollDice()">LEMPAR DADU</button>
+<h2 id="result">Belum bermain</h2>
+</div>
+
+<script>
+let rolling = false;
+
+function rollDice() {
+  if (rolling) return;
+  rolling = true;
+
+  const faces = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+  const button = document.getElementById("roll");
+  const dice = document.getElementById("dice");
+  const result = document.getElementById("result");
+
+  button.disabled = true;
+  result.textContent = "Mengocok dadu...";
+
+  let count = 0;
+
+  const timer = setInterval(() => {
+    dice.textContent = faces[Math.floor(Math.random() * 6)];
+    count++;
+
+    if (count >= 20) {
+      clearInterval(timer);
+
+      const number = Math.floor(Math.random() * 6) + 1;
+      dice.textContent = faces[number - 1];
+      result.textContent = "HASIL: " + number;
+
+      button.disabled = false;
+      rolling = false;
+    }
+  }, 100);
+}
+</script>
+</body>
+</html>
